@@ -1,0 +1,60 @@
+import requests
+
+class GroqBusinessAuditAPI:
+    def __init__(self, api_key, base_url="https://api.groq.com/openai/v1"):
+        self.api_key = api_key
+        self.base_url = base_url
+        self.headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json"
+        }
+
+    def get_models(self):
+        """Fetch available AI models from Groq."""
+        url = f"{self.base_url}/models"
+        response = requests.get(url, headers=self.headers)
+        return response.json()
+
+    def generate_audit_report(self, business_name, financials, compliance_status, risk_factors):
+        """Generate a full business audit report using Groq AI."""
+        prompt = f"""
+        Generate a comprehensive business audit report for {business_name}.
+        - Financial Summary: {financials}
+        - Compliance Status: {compliance_status}
+        - Risk Factors: {risk_factors}
+        Provide insights, risk analysis, and actionable recommendations.
+        """
+
+        url = f"{self.base_url}/chat/completions"
+        payload = {
+            "model": "mixtral-8x7b-32768",  # Use `get_models()` to check valid models
+            "messages": [
+                {"role": "system", "content": "You are an expert business auditor providing detailed reports."},
+                {"role": "user", "content": prompt}
+            ],
+            "max_tokens": 500
+        }
+
+        print(f"Making request to: {url}")  # Debugging
+
+        response = requests.post(url, json=payload, headers=self.headers)
+        return response.json()
+
+# Example Usage
+if __name__ == "__main__":
+    API_KEY = "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" 
+    groq_audit = GroqBusinessAuditAPI(API_KEY)
+
+    # Debugging: Check available models first
+    models_response = groq_audit.get_models()
+    print("Available Models:", models_response)
+
+    # Example Inputs
+    business_name = "XYZ Corp"
+    financials = "Revenue: $5M, Profit: $500K, Liabilities: $2M"
+    compliance_status = "Fully compliant with industry regulations."
+    risk_factors = "High dependency on a single supplier, cybersecurity vulnerabilities."
+
+    # Generate Audit Report
+    report = groq_audit.generate_audit_report(business_name, financials, compliance_status, risk_factors)
+    print("Business Audit Report:", report)
