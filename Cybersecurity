@@ -10,10 +10,10 @@ options = webdriver.ChromeOptions()
 service = Service(ChromeDriverManager().install())  
 driver = webdriver.Chrome(service=service, options=options)
 
-# Open a webpage with an email input field (Replace with actual URL)
+# Open a webpage with an email input field
 driver.get("https://example.com")  # Change to the target website
 
-# Find the email input field and extract email (Modify based on actual site)
+# Find the email input field and extract email
 email_element = driver.find_element(By.NAME, "email")  # Update locator if necessary
 email = email_element.get_attribute("value")  # Extract email
 
@@ -22,7 +22,7 @@ print(f"Extracted Email: {email}")
 # Close the Selenium driver
 driver.quit()
 
-# --- Call the RapidAPI Data Breach Checker API ---
+#Call RapidAPI Data Breach Checker API
 url = "https://data-breach-checker.p.rapidapi.com/api/breach"
 querystring = {"email": email}
 
@@ -32,6 +32,5 @@ headers = {
 }
 
 response = requests.get(url, headers=headers, params=querystring)
-
-# Print the API Response (Breach Details)
+ (Breach Details)
 print(response.json())
