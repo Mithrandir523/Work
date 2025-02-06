@@ -5,21 +5,20 @@ from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
 import requests
 
-# Set up Selenium WebDriver correctly
+# setupSelenium
 options = webdriver.ChromeOptions()
 service = Service(ChromeDriverManager().install())  
 driver = webdriver.Chrome(service=service, options=options)
 
-# Open a webpage with an email input field
+# Open webpage w/ email input field
 driver.get("https://example.com")  # Change to the target website
 
-# Find the email input field and extract email
+# Find email input field, extract email
 email_element = driver.find_element(By.NAME, "email")  # Update locator if necessary
 email = email_element.get_attribute("value")  # Extract email
 
 print(f"Extracted Email: {email}")
 
-# Close the Selenium driver
 driver.quit()
 
 #Call RapidAPI Data Breach Checker API
