@@ -14,14 +14,14 @@ def check_ip_address(ip_address):
 
     payload = {"ip_address": ip_address}
     headers = {
-        "x-rapidapi-key": "YOUR_RAPIDAPI_KEY",  # Replace with your actual RapidAPI key
+        "x-rapidapi-key": "API_KEY",
         "x-rapidapi-host": "cloud-service-ip-check.p.rapidapi.com",
         "Content-Type": "application/x-www-form-urlencoded"
     }
 
     try:
         response = requests.post(url, data=payload, headers=headers)
-        response.raise_for_status()  # Raise an exception for bad responses
+        response.raise_for_status()  # Raise exception
         return response.json()
     except requests.RequestException as e:
         print(f"Error checking IP address: {e}")
